@@ -6,8 +6,8 @@ app.get('/', (req, res) => res.send('Bot is awake!'));
 app.listen(process.env.PORT || 3000);
 
 const botArgs = {
-  host: 'dholakpurpro.mcsh.gg',   // ONLY the address (Example: 'myserver.mcsh.io')
-  port: 25565,              // ONLY the port number here (no quotes!)
+  host: '51.79.229.238',
+  port: 11249,
   username: 'AFK_Guardian',
   auth: 'offline',
   version: false
