@@ -1,12 +1,16 @@
+
 {
   "name": "mcserverhost-bot",
   "version": "1.0.0",
+  "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "npm ls @wp2508/mineflayer @wp2508/minecraft-protocol @wp2508/minecraft-data && node index.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "@wp2508/mineflayer": "^4.42.8"
+    "express": "4.18.2",
+    "@wp2508/mineflayer": "4.42.8",
+    "@wp2508/minecraft-protocol": "1.69.7",
+    "@wp2508/minecraft-data": "3.111.8"
   }
 }
