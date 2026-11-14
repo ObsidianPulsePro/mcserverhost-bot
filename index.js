@@ -6,8 +6,8 @@ app.get('/', (req, res) => res.send('Bot is awake!'));
 app.listen(process.env.PORT || 3000);
 
 const botArgs = {
-  host: 'dholakpurpro.mcsh.gg',   // Put ONLY the address (Example: 'myserver.mcsh.io')
-  port: 25565,              // Put ONLY the port number here (no quotes!)
+  host: 'dholakpurpro.mcsh.gg',   // ONLY the address (Example: 'myserver.mcsh.io')
+  port: 25565,              // ONLY the port number here (no quotes!)
   username: 'AFK_Guardian',
   auth: 'offline',
   version: false
@@ -37,7 +37,6 @@ function startBot() {
     }, 30000);
   });
 
-  // Prints the exact reason if the server kicks or blocks the bot
   bot.on('kicked', (reason) => {
     console.log('Kicked by server:', reason);
     scheduleReconnect();
