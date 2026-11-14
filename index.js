@@ -11,6 +11,7 @@ const botArgs = {
   username: 'TechnoBlade',
   auth: 'offline',
   version: '1.21.4' // Changed from false to '1.21.4' so ViaBackwards lets it join!
+  skipPing: true
 };
 
 let retryTimer = null;
