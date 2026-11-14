@@ -1,23 +1,34 @@
 const mineflayer = require('mineflayer');
 const express = require('express');
 
-// 1. Mini website so the free cloud host stays awake
 const app = express();
 app.get('/', (req, res) => res.send('Bot is awake!'));
 app.listen(process.env.PORT || 3000);
 
-// 2. Your MCServerHost server details
 const botArgs = {
-  host: 'dholakpurpro.mcsh.gg',   // Example: 'myserver.mcsh.io'
-  port: 25565,              // Put your port number here (no quotes!)
-  username: 'AFK_Guardian', // Pick any name you want
-  auth: 'offline'           // No official Minecraft account needed
+  host: 'dholakpurpro.mcsh.gg',   // Put ONLY the address (Example: 'myserver.mcsh.io')
+  port: 25565,              // Put ONLY the port number here (no quotes!)
+  username: 'AFK_Guardian',
+  auth: 'offline',
+  version: false
 };
 
+let reconnecting = false;
+
+function scheduleReconnect() {
+  if (reconnecting) return;
+  reconnecting = true;
+  console.log('Rejoining in 10 seconds...');
+  setTimeout(() => {
+    reconnecting = false;
+    startBot();
+  }, 10000);
+}
+
 function startBot() {
+  console.log('Trying to connect to server...');
   const bot = mineflayer.createBot(botArgs);
 
-  // Move slightly every 30 seconds so MCServerHost knows someone is active
   bot.on('spawn', () => {
     console.log('Bot joined the server!');
     setInterval(() => {
@@ -26,13 +37,21 @@ function startBot() {
     }, 30000);
   });
 
-  // Rejoin automatically if disconnected
-  bot.on('end', () => {
-    console.log('Disconnected. Rejoining in 10 seconds...');
-    setTimeout(startBot, 10000);
+  // Prints the exact reason if the server kicks or blocks the bot
+  bot.on('kicked', (reason) => {
+    console.log('Kicked by server:', reason);
+    scheduleReconnect();
   });
 
-  bot.on('error', (err) => console.log('Error:', err));
+  bot.on('error', (err) => {
+    console.log('Connection error:', err.message);
+    scheduleReconnect();
+  });
+
+  bot.on('end', () => {
+    console.log('Disconnected.');
+    scheduleReconnect();
+  });
 }
 
 startBot();
