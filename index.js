@@ -1,17 +1,18 @@
-const mineflayer = require('mineflayer');
+const mineflayer = require('@wp2508/mineflayer');
 const express = require('express');
 
+// 1. Mini webpage so Render and UptimeRobot stay awake 24/7
 const app = express();
 app.get('/', (req, res) => res.send('TechnoBlade bot is running 24/7!'));
 app.listen(process.env.PORT || 3000);
 
+// 2. Your exact MCServerHost Primary details with native 26.3 support
 const botArgs = {
   host: '51.79.229.238',
   port: 11249,
   username: 'TechnoBlade',
   auth: 'offline',
-  version: '1.21.4' // Changed from false to '1.21.4' so ViaBackwards lets it join!
-  skipPing: true
+  version: '26.3'
 };
 
 let retryTimer = null;
@@ -32,7 +33,7 @@ function startBot() {
     jumpTimer = null;
   }
 
-  console.log('Attempting to join server as TechnoBlade (1.21.4)...');
+  console.log('Attempting to join server as TechnoBlade (26.3)...');
 
   try {
     const bot = mineflayer.createBot(botArgs);
